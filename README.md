@@ -66,13 +66,12 @@ tokenize-art-sepolia/
 │   └── verify-ownership.js     # Ownership verification script
 ├── mint-files/
 │   ├── metadata.json           # NFT metadata (uploaded to IPFS)
-│   ├── index.html              # Web minting interface
-│   └── IPFS_UPLOAD_GUIDE.md    # Guide for uploading to Pinata
+│   └── index.html              # Web minting interface
 ├── images/
 │   └── nft-image.svg           # NFT artwork (uploaded to IPFS)
 ├── hardhat.config.js           # Hardhat configuration
 ├── package.json                # Node.js dependencies
-├── .env.example                # Environment variables template
+├── .env                        # Environment variables template
 ├── .gitignore                  # Excludes .env, node_modules, artifacts
 └── README.md                   # This file
 ```
