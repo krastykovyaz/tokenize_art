@@ -1,0 +1,43 @@
+{
+  "name": "TokenizeArt42 #1",
+  "description": "The legendary TokenizeArt42 NFT - A unique digital collectible from the 42 collection built on BNB Chain. This NFT represents the ultimate answer to life, the universe, and everything in the blockchain world.",
+  "image": "ipfs://bafkreibipf6lqfem4ct2qbawruf57blpsw5cez3p54apdjgd3u22gwr7ca",
+  "external_url": "http://intra.42.fr",
+  "attributes": [
+    {
+      "trait_type": "Artist",
+      "value": "lnoisome"
+    },
+    {
+      "trait_type": "Collection",
+      "value": "TokenizeArt42"
+    },
+    {
+      "trait_type": "Number",
+      "value": "42"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Legendary"
+    },
+    {
+      "trait_type": "Blockchain",
+      "value": "Ethereum Sepolia"
+    },
+    {
+      "trait_type": "Standard",
+      "value": "ERC-721"
+    },
+    {
+      "display_type": "number",
+      "trait_type": "Edition",
+      "value": 1,
+      "max_value": 42
+    }
+  ],
+  "properties": {
+    "creator": "lnoisome",
+    "project": "42 School - TokenizeArt",
+    "category": "Art"
+  }
+}

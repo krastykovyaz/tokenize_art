@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TokenizeArt42 - Mint NFT</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .nft-preview {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+        }
+
+        .nft-preview img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .info-box {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .info-value {
+            color: #333;
+        }
+
+        .wallet-section {
+            margin: 30px 0;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 10px 0;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .status {
+            text-align: center;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .transaction-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .transaction-link:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .wallet-address {
+            font-family: monospace;
+            font-size: 0.9em;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎨 TokenizeArt42</h1>
+            <p>Legendary NFT Collection on BNB Chain</p>
+        </div>
+
+        <div class="nft-preview">
+            <svg width="300" height="300" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="numberGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#ffd700;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#ffed4e;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <rect width="300" height="300" rx="15" fill="#1a1a2e"/>
+                <text x="150" y="100" font-family="Arial" font-size="20" font-weight="bold" fill="#ffffff" text-anchor="middle">TokenizeArt</text>
+                <text x="150" y="200" font-family="Arial" font-size="100" font-weight="bold" fill="url(#numberGradient)" text-anchor="middle">42</text>
+                <text x="150" y="250" font-family="Arial" font-size="14" fill="#ffffff" text-anchor="middle" opacity="0.8">The Answer to Everything</text>
+            </svg>
+        </div>
+
+        <div class="info-box">
+            <div class="info-row">
+                <span class="info-label">Collection:</span>
+                <span class="info-value">TokenizeArt42</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Symbol:</span>
+                <span class="info-value">TA42</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Max Supply:</span>
+                <span class="info-value" id="maxSupply">42</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Minted:</span>
+                <span class="info-value" id="totalMinted">-</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Mint Price:</span>
+                <span class="info-value" id="mintPrice">-</span>
+            </div>
+        </div>
+
+        <div class="wallet-section">
+            <button class="btn btn-secondary" id="connectBtn" onclick="connectWallet()">
+                🦊 Connect MetaMask
+            </button>
+            
+            <div id="walletInfo" style="display: none;">
+                <div class="info-box">
+                    <div class="info-row">
+                        <span class="info-label">Connected:</span>
+                        <span class="info-value wallet-address" id="walletAddress">-</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Balance:</span>
+                        <span class="info-value" id="walletBalance">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" id="mintBtn" onclick="mintNFT()" disabled>
+                🎨 Mint NFT
+            </button>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p style="margin-top: 15px;">Processing transaction...</p>
+        </div>
+
+        <div class="status" id="status"></div>
+
+        <div class="footer">
+            <p>Built with ❤️ for 42 School</p>
+            <p>
+                <a href="https://testnet.bscscan.com/" target="_blank">View on BscScan</a> | 
+                <a href="https://testnet.bnbchain.org/faucet-smart" target="_blank">Get Test BNB</a>
+            </p>
+        </div>
+    </div>
+
+    <script src="https://cdn.ethers.io/lib/ethers-5.7.2.umd.min.js"></script>
+    <script>
+        // Contract configuration - UPDATE THESE VALUES
+        const CONTRACT_ADDRESS = "YOUR_CONTRACT_ADDRESS_HERE";
+        const CONTRACT_ABI = [
+            "function name() view returns (string)",
+            "function symbol() view returns (string)",
+            "function totalMinted() view returns (uint256)",
+            "function MAX_SUPPLY() view returns (uint256)",
+            "function mintPrice() view returns (uint256)",
+            "function safeMint(address to, string uri) payable",
+            "function ownerOf(uint256 tokenId) view returns (address)",
+            "event NFTMinted(address indexed to, uint256 indexed tokenId, string tokenURI)"
+        ];
+        const METADATA_URI = "ipfs://YOUR_METADATA_HASH/metadata.json";
+        const BSC_TESTNET_CHAIN_ID = "0x61"; // 97 in decimal
+
+        let provider;
+        let signer;
+        let contract;
+        let userAddress;
+
+        async function connectWallet() {
+            try {
+                if (typeof window.ethereum === 'undefined') {
+                    showStatus('error', 'MetaMask is not installed. Please install MetaMask to continue.');
+                    return;
+                }
+
+                // Request account access
+                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                userAddress = accounts[0];
+
+                // Check if on BSC Testnet
+                const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+                if (chainId !== BSC_TESTNET_CHAIN_ID) {
+                    await switchToBSCTestnet();
+                }
+
+                // Set up provider and contract
+                provider = new ethers.providers.Web3Provider(window.ethereum);
+                signer = provider.getSigner();
+                contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+
+                // Update UI
+                document.getElementById('walletAddress').textContent = 
+                    userAddress.substring(0, 6) + '...' + userAddress.substring(38);
+                
+                const balance = await provider.getBalance(userAddress);
+                document.getElementById('walletBalance').textContent = 
+                    ethers.utils.formatEther(balance) + ' BNB';
+
+                document.getElementById('connectBtn').style.display = 'none';
+                document.getElementById('walletInfo').style.display = 'block';
+                document.getElementById('mintBtn').disabled = false;
+
+                // Load contract info
+                await loadContractInfo();
+
+                showStatus('success', 'Wallet connected successfully!');
+            } catch (error) {
+                console.error('Error connecting wallet:', error);
+                showStatus('error', 'Failed to connect wallet: ' + error.message);
+            }
+        }
+
+        async function switchToBSCTestnet() {
+            try {
+                await window.ethereum.request({
+                    method: 'wallet_switchEthereumChain',
+                    params: [{ chainId: BSC_TESTNET_CHAIN_ID }],
+                });
+            } catch (switchError) {
+                // Chain not added, add it
+                if (switchError.code === 4902) {
+                    try {
+                        await window.ethereum.request({
+                            method: 'wallet_addEthereumChain',
+                            params: [{
+                                chainId: BSC_TESTNET_CHAIN_ID,
+                                chainName: 'BSC Testnet',
+                                nativeCurrency: {
+                                    name: 'BNB',
+                                    symbol: 'BNB',
+                                    decimals: 18
+                                },
+                                rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545'],
+                                blockExplorerUrls: ['https://testnet.bscscan.com']
+                            }],
+                        });
+                    } catch (addError) {
+                        throw addError;
+                    }
+                } else {
+                    throw switchError;
+                }
+            }
+        }
+
+        async function loadContractInfo() {
+            try {
+                const totalMinted = await contract.totalMinted();
+                const mintPrice = await contract.mintPrice();
+
+                document.getElementById('totalMinted').textContent = totalMinted.toString();
+                document.getElementById('mintPrice').textContent = 
+                    ethers.utils.formatEther(mintPrice) + ' BNB';
+            } catch (error) {
+                console.error('Error loading contract info:', error);
+            }
+        }
+
+        async function mintNFT() {
+            try {
+                showLoading(true);
+                hideStatus();
+
+                // Check supply
+                const totalMinted = await contract.totalMinted();
+                const maxSupply = await contract.MAX_SUPPLY();
+                
+                if (totalMinted.gte(maxSupply)) {
+                    showStatus('error', 'Maximum supply reached! All NFTs have been minted.');
+                    showLoading(false);
+                    return;
+                }
+
+                // Get mint price
+                const mintPrice = await contract.mintPrice();
+
+                // Mint NFT
+                showStatus('info', 'Please confirm the transaction in MetaMask...');
+                const tx = await contract.safeMint(userAddress, METADATA_URI, {
+                    value: mintPrice
+                });
+
+                showStatus('info', 'Transaction submitted! Waiting for confirmation...');
+                
+                const receipt = await tx.wait();
+                
+                // Find the NFTMinted event
+                const event = receipt.events?.find(e => e.event === 'NFTMinted');
+                const tokenId = event?.args?.tokenId;
+
+                showStatus('success', 
+                    `🎉 Success! NFT #${tokenId} minted! <br>` +
+                    `<a href="https://testnet.bscscan.com/tx/${receipt.transactionHash}" target="_blank" class="transaction-link">View Transaction</a>`
+                );
+
+                // Reload contract info
+                await loadContractInfo();
+
+            } catch (error) {
+                console.error('Minting error:', error);
+                let errorMessage = 'Minting failed: ';
+                
+                if (error.code === 4001) {
+                    errorMessage += 'Transaction rejected by user';
+                } else if (error.message.includes('Max supply reached')) {
+                    errorMessage += 'Maximum supply reached';
+                } else if (error.message.includes('Insufficient payment')) {
+                    errorMessage += 'Insufficient payment sent';
+                } else {
+                    errorMessage += error.message;
+                }
+                
+                showStatus('error', errorMessage);
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        function showLoading(show) {
+            document.getElementById('loading').style.display = show ? 'block' : 'none';
+            document.getElementById('mintBtn').disabled = show;
+        }
+
+        function showStatus(type, message) {
+            const statusDiv = document.getElementById('status');
+            statusDiv.className = 'status ' + type;
+            statusDiv.innerHTML = message;
+            statusDiv.style.display = 'block';
+        }
+
+        function hideStatus() {
+            document.getElementById('status').style.display = 'none';
+        }
+
+        // Check if already connected on page load
+        window.addEventListener('load', async () => {
+            if (typeof window.ethereum !== 'undefined') {
+                const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+                if (accounts.length > 0) {
+                    connectWallet();
+                }
+            }
+        });
+
+        // Listen for account changes
+        if (typeof window.ethereum !== 'undefined') {
+            window.ethereum.on('accountsChanged', (accounts) => {
+                if (accounts.length === 0) {
+                    location.reload();
+                } else {
+                    connectWallet();
+                }
+            });
+
+            window.ethereum.on('chainChanged', () => {
+                location.reload();
+            });
+        }
+    </script>
+</body>
+</html>
